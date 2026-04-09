@@ -2,6 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/biodata', function () {
+    return "Nama: Ragisha Hanny Azalia Putri<br>NIM: 24.12.3182";
 });
