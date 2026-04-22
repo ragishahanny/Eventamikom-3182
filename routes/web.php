@@ -43,6 +43,10 @@ Route::get('/transactions', function () {
     return view('admin.transactions');
 })->name('admin.transactions');
 
+Route::get('/admin/kategori', function () {
+    return view('admin.categories.index');
+})->name('admin.kategori');
+
 // Route::group(['prefix' => 'admin','as' => 'admin.'], function () {
 
 // Route::get('/', [DashboardController::class,'index'])->name('dashboard');

@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-     <!-- Main Content -->
-     <main class="flex-1 p-10 overflow-y-auto">
+<main class="flex-1 p-10 overflow-y-auto">
         <!-- Header -->
         <header class="flex justify-between items-center mb-10">
             <div>
@@ -124,5 +123,4 @@
             </div>
         </div>
     </main>
-
-@endsection
+    @endsection

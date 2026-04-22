@@ -1,31 +1,26 @@
+<!-- File: resources/views/katalog.blade.php -->
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Katalog Event</title>
+    <title>Daftar Event Katalog</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50 min-h-screen p-6">
-    <div class="max-w-3xl mx-auto">
-        <h1 class="text-3xl font-bold text-center mb-6">Daftar Event AmikomEventHub</h1>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition">
-                <h2 class="font-semibold text-xl mb-2">Event 1</h2>
-                <p class="text-gray-500">Tanggal: 10 April 2026</p>
-            </div>
-            <div class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition">
-                <h2 class="font-semibold text-xl mb-2">Event 2</h2>
-                <p class="text-gray-500">Tanggal: 15 April 2026</p>
-            </div>
-            <!-- Tambahkan placeholder lain sesuai kebutuhan -->
-        </div>
 
-        <div class="mt-6 flex justify-center gap-4">
-            <a href="/" class="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 transition">Home</a>
-            <a href="/profil" class="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 transition">Profil</a>
-            <a href="/bantuan" class="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 transition">Bantuan</a>
-            <a href="/kontak" class="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 transition">Kontak</a>
-        </div>
+<body class="bg-slate-100 flex items-center justify-center h-screen">
+    <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 text-center max-w-sm w-full">
+        <h1 class="text-2xl font-bold text-slate-800 mb-2">Daftar Event AmikomEventHub</h1>
+        <p class="text-slate-500 mb-6">Berikut adalah daftar event yang akan datang:</p>
+        <ul class="text-left text-slate-500 mb-6">
+            <li>Event 1 - Workshop Web Development</li>
+            <li>Event 2 - Seminar Cloud Computing</li>
+            <li>Event 3 - Coding Bootcamp</li>
+        </ul>
+        
+        <a href="{{ url('/') }}" class="inline-block bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-indigo-700 hover:shadow-md transition duration-300">
+            Kembali ke Home
+        </a>
     </div>
 </body>
+
 </html>
