@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\EventController as EventAdminController;
 
 
 Route::get('/',[HomeController::class, 'index']
@@ -31,21 +32,35 @@ Route::get('/bantuan', function () {
     return view('bantuan');
 });
 
-Route::get('/dashboard', function () {
-    return view('admin.dashboard');
-})->name('admin.dashboard');
+// Route::get('/dashboard', function () {
+//     return view('admin.dashboard');
+// })->name('admin.dashboard');
 
-Route::get('/event', function () {
-    return view('admin.events');
-})->name('admin.events');
+// Route::get('/event', function () {
+//     return view('admin.events');
+// })->name('admin.events');
 
-Route::get('/transactions', function () {
-    return view('admin.transactions');
-})->name('admin.transactions');
+// Route::get('/transactions', function () {
+//     return view('admin.transactions');
+// })->name('admin.transactions');
 
-Route::get('/admin/kategori', function () {
-    return view('admin.categories.index');
-})->name('admin.kategori');
+// Route::get('/admin/kategori', function () {
+//     return view('admin.categories.index');
+// })->name('admin.kategori');
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    
+    Route::resource('events', EventAdminController::class);
+    
+    Route::get('/transactions', function () {
+        return view('admin.transactions');
+    })->name('transactions');
+
+    Route::get('/kategori', function () {
+        return view('admin.categories.index');
+    })->name('kategori');
+});
 
 // Route::group(['prefix' => 'admin','as' => 'admin.'], function () {
 
