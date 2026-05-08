@@ -37,7 +37,7 @@ class EventController extends Controller
             'location'    => 'required',
             'price'       => 'required|numeric',
             'stock'       => 'required|numeric',
-            'poster'      => 'required|image|mimes:jpg,png,jpeg|max:2048',
+            'poster'      => 'required|image',
         ]);
     
         $data = $request->all(); 
