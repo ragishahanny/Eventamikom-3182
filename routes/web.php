@@ -1,12 +1,11 @@
 <?php
-// Ragisha hanny azalia putri//
-//24.12.3182//
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EventController as EventAdminController;
-
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\PartnerController;
 
 Route::get('/',[HomeController::class, 'index']
 )->name('home');
@@ -69,5 +68,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 // Route::get('/events', [EventController::class,'indexAdmin'])->name('events.index');
 
+Route::prefix('admin')->name('admin.')->group(function () {
+    // Route CRUD Kategori otomatis (index, store, update, destroy, dll)
+    Route::resource('categories', CategoryController::class)->except(['create', 'show', 'edit']);
+});
 
+Route::prefix('admin')->name('admin.')->group(function () {
+    // Route yang sudah ada sebelumnya (events, categories... )
+    
+    // Tambahkan baris ini untuk partner:
+    Route::resource('partners', PartnerController::class);
+});
+
+Route::get('/', \App\Http\Controllers\WelcomeController::class)->name('welcome');
 // });

@@ -98,3 +98,4 @@ public function run(): void
         'poster_path' => 'posters/event-6.png',
     ]);
 }
+}
