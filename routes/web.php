@@ -81,4 +81,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 Route::get('/', \App\Http\Controllers\WelcomeController::class)->name('welcome');
+
+
 // });

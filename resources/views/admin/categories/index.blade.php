@@ -26,11 +26,11 @@
         </button>
     </div>
 
-    <div class="mb-6 max-w-md">
-        <form action="{{ route('admin.categories.index') }}" method="GET" class="flex gap-2">
+    <div class="mb-6 max-w-xl">
+        <form action="{{ route('admin.categories.index') }}" method="GET" class="flex gap-3 items-center w-full">
             <div class="relative flex-1">
-                <inp ut type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama kategori..." 
-                       class="w-full pl-4 pr-10 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm bg-white">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama kategori..." 
+                       class="w-full pl-4 pr-10 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm bg-white shadow-sm">
                 
                 @if(request('search'))
                     <a href="{{ route('admin.categories.index') }}" class="absolute right-3 top-2 text-slate-400 hover:text-slate-600 font-bold text-lg">
@@ -38,7 +38,7 @@
                     </a>
                 @endif
             </div>
-            <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-indigo-700 transition font-semibold shadow-sm">
+            <button type="submit" class="bg-indigo-600 text-white px-6 py-2.5 rounded-lg text-sm hover:bg-indigo-700 transition font-semibold shadow-md whitespace-nowrap">
                 Cari
             </button>
         </form>
