@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
-use App\Models\Transaction; // Ini model database kamu
+use App\Models\Transaction; // Ini model database kam
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -47,7 +47,7 @@ class CheckoutController extends Controller
         ]);
 
         // 5. Integrasi Snap Midtrans & Generate Token Pembayaran
-        
+
         // Konfigurasi Kredensial Environment Midtrans
         \Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
         \Midtrans\Config::$isProduction = false; // Mode Sandbox!
@@ -106,13 +106,13 @@ class CheckoutController extends Controller
         try {
             // Perbaikan: Gunakan \Midtrans\Transaction secara eksplisit sebagai array/object utuh
             $midtransStatus = \Midtrans\Transaction::status($order_id);
-            
+
             // Konversi ke array agar ekstra aman saat dibaca sistem PHP PHP 8+
             $statusResponse = (array) $midtransStatus;
 
             if (isset($statusResponse['transaction_status'])) {
                 $statusTrx = $statusResponse['transaction_status'];
-                
+
                 // Hanya ubah status jika Midtrans mengonfirmasi pembayaran lunas
                 if (in_array($statusTrx, ['capture', 'settlement'])) {
                     // Update status model database kamu ke success/Success
@@ -125,5 +125,9 @@ class CheckoutController extends Controller
         }
 
         return view('checkout.success', compact('transaction', 'categories'));
+
+        // 5. Arahkan ke rute dummy halaman sukses sementara
+        // (Akan kita ubah di Pertemuan selanjutnya menuju Midtrans)
+        return redirect('/');
     }
 }

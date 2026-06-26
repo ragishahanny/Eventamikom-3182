@@ -50,6 +50,10 @@
                 </tr>
                 @empty
                 <tr>
+<<<<<<< HEAD
+=======
+                    {{-- Diubah menjadi colspan="6" agar pas menutup seluruh lebar kolom tabel --}}
+>>>>>>> 440e3712f0829491744ee11e10f611ed02f6dcac
                     <td colspan="6" class="px-8 py-10 text-center text-slate-500">Belum ada transaksi</td>
                 </tr>
                 @endforelse
