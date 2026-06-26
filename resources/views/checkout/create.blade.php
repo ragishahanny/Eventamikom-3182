@@ -1,5 +1,7 @@
 @extends('layouts.app')
+
 @section('title', 'Checkout - ' . $event->title)
+
 @section('content')
 <main class="max-w-3xl mx-auto px-6 py-20">
     <div class="mb-12">
@@ -20,7 +22,6 @@
     @endif
 
     <div class="grid grid-cols-1 gap-8">
-        <!-- Summary Card -->
         <div class="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm">
             <h3 class="text-xl font-bold mb-6 border-b pb-4">Pesanan Anda</h3>
             <div class="flex gap-6 items-start">
@@ -49,28 +50,22 @@
             </div>
         </div>
 
-        <!-- Form Card -->
         <div class="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm">
-            <h3 class="text-xl font-bold mb-6 italic text-indigo-600 underline underline-offset-8">📦 Data Pemesan
-                (Tanpa Login)</h3>
+            <h3 class="text-xl font-bold mb-6 italic text-indigo-600 underline underline-offset-8">📦 Data Pemesan (Tanpa Login)</h3>
             <form action="{{ route('checkout.store', $event->id) }}" method="POST" class="space-y-6">
                 @csrf
                 <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">Nama
-                        Lengkap</label>
+                    <label class="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">Nama Lengkap</label>
                     <input type="text" name="customer_name" placeholder="Masukkan nama sesuai identitas" class="w-full px-5 py-4 bg-white border-2 border-slate-100 rounded-2xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-600 outline-none transition font-medium" required value="{{ old('customer_name') }}">
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">Email
-                            Aktif</label>
+                        <label class="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">Email Aktif</label>
                         <input type="email" name="customer_email" placeholder="contoh@gmail.com" class="w-full px-5 py-4 bg-white border-2 border-slate-100 rounded-2xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-600 outline-none transition font-medium" required value="{{ old('customer_email') }}">
-                        <p class="text-[10px] text-slate-400 mt-2 font-bold uppercase tracking-tighter">*E-Ticket
-                            akan dikirim ke email ini</p>
+                        <p class="text-[10px] text-slate-400 mt-2 font-bold uppercase tracking-tighter">*E-Ticket akan dikirim ke email ini</p>
                     </div>
                     <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">No.
-                            WhatsApp</label>
+                        <label class="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">No. WhatsApp</label>
                         <input type="tel" name="customer_phone" placeholder="08xxxxxxx" class="w-full px-5 py-4 bg-white border-2 border-slate-100 rounded-2xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-600 outline-none transition font-medium" required value="{{ old('customer_phone') }}">
                     </div>
                 </div>
@@ -78,11 +73,9 @@
                 <button type="submit" class="w-full py-5 bg-indigo-600 text-white rounded-2xl font-black text-xl shadow-xl shadow-indigo-200 hover:bg-indigo-700 active:scale-95 transition-all">
                     Lanjut Pembayaran
                 </button>
-                <p class="text-center text-xs text-slate-400">Dengan menekan tombol di atas, Anda menyetujui Syarat
-                    & Ketentuan kami.</p>
+                <p class="text-center text-xs text-slate-400">Dengan menekan tombol di atas, Anda menyetujui Syarat & Ketentuan kami.</p>
             </form>
         </div>
-
     </div>
 </main>
 @endsection
