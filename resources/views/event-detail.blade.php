@@ -1,10 +1,10 @@
-@extends('Layouts.main')
+@extends('layouts.app')
 @section('content')
 <main class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-3 gap-12">
         <div class="lg:col-span-1">
             <div class="sticky top-32">
-                <img src="assets/concert.png" alt="Concert Poster"
-                    class="w-full rounded-[2.5rem] shadow-2xl border-8 border-white">
+                <img src="{{ asset('assets/concert.png') }}" alt="Concert Poster" 
+                class="w-full rounded-[2.5rem] shadow-2xl border-8 border-white">
                 <div class="mt-8 p-6 bg-white rounded-3xl border border-slate-100 shadow-sm">
                     <h4 class="font-bold mb-4">Penyelenggara</h4>
                     <div class="flex items-center gap-4">
@@ -76,13 +76,12 @@
                             </svg>
                             Sisa stok: <span class="font-bold underline">42 Tiket lagi!</span>
                         </p>
-                    </div>
-                    <div>
-                        <a href="checkout.html"
-                            class="inline-block px-10 py-5 bg-white text-indigo-600 rounded-2xl font-black text-xl hover:scale-105 transition-transform shadow-xl">
-                            Pesan Sekarang
-                        </a>
-                    </div>
+                    <div class="relative z-50">
+    <a href="/checkout/create/{{ collect(request()->segments())->last() }}"
+        class="inline-block px-10 py-5 bg-white text-indigo-600 rounded-2xl font-black text-xl hover:scale-105 transition-transform shadow-xl cursor-pointer">
+        Pesan Sekarang
+    </a>
+</div>
                 </div>
                 <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-white opacity-10 rounded-full"></div>
                 <div class="absolute -left-10 -top-10 w-32 h-32 bg-indigo-400 opacity-20 rounded-full"></div>

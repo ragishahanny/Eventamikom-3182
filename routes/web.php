@@ -3,7 +3,7 @@
 // 24.12.3182 //
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\WelcomeController; // Pastikan ini di-import
+use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -19,26 +19,24 @@ use App\Http\Controllers\Admin\CategoryController;
 |--------------------------------------------------------------------------
 */
 
-// Menggunakan WelcomeController (__invoke tidak perlu ditulis nama method-nya)
 Route::get('/', WelcomeController::class)->name('home');
 
+// Rute Detail Event
 Route::get('/event/{id}', [EventController::class, 'show'])->name('events.show');
-Route::get('/checkout', [EventController::class, 'checkout'])->name('checkout');
 Route::get('/my-ticket', [EventController::class, 'ticket'])->name('ticket');
 
-Route::get('/tentang', function () {
-    return '<h1>Ini adalah Halaman Tentang Aplikasi Event Hub</h1>';
-});
-
+// Rute Halaman Statis Extra
+Route::get('/tentang', function () { return '<h1>Ini adalah Halaman Tentang Aplikasi Event Hub</h1>'; });
 Route::get('/kontak', function () { return view('contact'); });
 Route::get('/profile', function () { return view('profile'); });
 Route::get('/katalog', function () { return view('katalog'); });
 Route::get('/bantuan', function () { return view('bantuan'); });
 
-Route::get('/checkout/{event}', [CheckoutController::class, 'create'])->name('checkout.create');
-Route::post('/checkout/{event}', [CheckoutController::class, 'store'])->name('checkout.store');
-Route::get('/payment/{order_id}', [CheckoutController::class, 'payment'])->name('checkout.payment');
-Route::get('/success/{order_id}', [CheckoutController::class, 'success'])->name('checkout.success');
+// --- ALUR CHECKOUT MIDTRANS (SUDAH DI-BERSIHKAN & FIXED) ---
+Route::get('/checkout/create/{event}', [CheckoutController::class, 'create'])->name('checkout.create');
+Route::post('/checkout/store/{event}', [CheckoutController::class, 'store'])->name('checkout.store');
+Route::get('/checkout/payment/{order_id}', [CheckoutController::class, 'payment'])->name('checkout.payment');
+Route::get('/checkout/success/{order_id}', [CheckoutController::class, 'success'])->name('checkout.success');
 
 Route::get('/login', function () {
     return redirect()->route('admin.login');
@@ -63,7 +61,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
-    
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', [DashboardController::class, 'index']); 
 
@@ -71,10 +68,4 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::resource('partners', PartnerController::class);
     Route::resource('kategori', CategoryController::class)->names('categories');
     Route::get('transactions', [TransactionController::class, 'index'])->name('transactions.index');
-});
-
-Route::get('/checkout/{id}', [CheckoutController::class, 'index'])->name('checkout');
-// Atau jika menggunakan closure basic:
-Route::get('/checkout', function () {
-    return view('checkout'); // 'checkout' merujuk ke nama file checkout.blade.php
 });

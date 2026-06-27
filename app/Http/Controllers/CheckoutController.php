@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
-use App\Models\Transaction; // Ini model database kam
+use App\Models\Transaction;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -12,7 +13,7 @@ class CheckoutController extends Controller
     public function create(Event $event)
     {
         // Mengambil daftar kategori untuk keperluan menu footer
-        $categories = \App\Models\Category::all();
+        $categories = Category::all();
 
         return view('checkout.create', compact('event', 'categories'));
     }
@@ -50,7 +51,7 @@ class CheckoutController extends Controller
 
         // Konfigurasi Kredensial Environment Midtrans
         \Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
-        \Midtrans\Config::$isProduction = false; // Mode Sandbox!
+        \Midtrans\Config::$isProduction = false; // Mode Sandbox! Sesuai Modul!
         \Midtrans\Config::$isSanitized = true;
         \Midtrans\Config::$is3ds = true;
 
@@ -58,7 +59,7 @@ class CheckoutController extends Controller
         $params = [
             'transaction_details' => [
                 'order_id' => $orderId,
-                'gross_amount' => $totalPrice,
+                'gross_amount' => (int) $totalPrice,
             ],
             'customer_details' => [
                 'first_name' => $request->customer_name,
@@ -85,7 +86,7 @@ class CheckoutController extends Controller
     public function payment($order_id)
     {
         // Mengambil daftar kategori untuk keperluan menu footer
-        $categories = \App\Models\Category::all();
+        $categories = Category::all();
 
         $transaction = Transaction::with('event')->where('order_id', $order_id)->firstOrFail();
         return view('checkout.payment', compact('transaction', 'categories'));
@@ -98,36 +99,23 @@ class CheckoutController extends Controller
         $categories = \App\Models\Category::all();
 
         $transaction = Transaction::where('order_id', $order_id)->firstOrFail();
-
+         
         // Validasi status pembayaran asli dari Midtrans (Mencegah manipulasi URL)
         \Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
         \Midtrans\Config::$isProduction = false;
-
+         
         try {
-            // Perbaikan: Gunakan \Midtrans\Transaction secara eksplisit sebagai array/object utuh
             $midtransStatus = \Midtrans\Transaction::status($order_id);
-
-            // Konversi ke array agar ekstra aman saat dibaca sistem PHP PHP 8+
-            $statusResponse = (array) $midtransStatus;
-
-            if (isset($statusResponse['transaction_status'])) {
-                $statusTrx = $statusResponse['transaction_status'];
-
-                // Hanya ubah status jika Midtrans mengonfirmasi pembayaran lunas
-                if (in_array($statusTrx, ['capture', 'settlement'])) {
-                    // Update status model database kamu ke success/Success
-                    $transaction->update(['status' => 'success']);
-                }
+            
+            // Hanya ubah status menjadi sukses jika Midtrans mengonfirmasi pembayaran lunas
+            if (in_array($midtransStatus->transaction_status, ['capture', 'settlement'])) {
+                $transaction->update(['status' => 'success']);
             }
         } catch (\Exception $e) {
-            // Jika terjadi error, kita arahkan kembali ke root URL '/' agar aman
-            return redirect('/')->with('error', 'Gagal memverifikasi pembayaran: ' . $e->getMessage());
+            // Jika error (transaksi tidak ada di Midtrans, koneksi terputus), kembalikan ke beranda
+            return redirect()->route('home')->with('error', 'Transaksi tidak ditemukan atau gagal diproses oleh sistem pembayaran.');
         }
 
         return view('checkout.success', compact('transaction', 'categories'));
-
-        // 5. Arahkan ke rute dummy halaman sukses sementara
-        // (Akan kita ubah di Pertemuan selanjutnya menuju Midtrans)
-        return redirect('/');
     }
 }

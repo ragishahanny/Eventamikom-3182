@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app')
 @section('title', 'Pembayaran Berhasil')
 @section('content')
 <main class="max-w-3xl mx-auto px-6 py-20 text-center">
